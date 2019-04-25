@@ -1,0 +1,21 @@
+""" SELECT mstr.playerID, mstr.nameFirst, mstr.nameLast FROM  (
+                        (SELECT DISTINCT playerID, nameFirst, nameLast FROM master) AS mstr
+                         RIGHT OUTER JOIN 
+                        (SELECT playerID  
+                         FROM salaries 
+                         GROUP BY playerID 
+                         HAVING AVG(salary) > (SELECT AVG(salary) FROM salaries) ) AS plyr
+                         ON mstr.playerID = plyr.playerID
+                      ) 
+                ORDER BY playerID """
+
+
+""" SELECT mstr.playerID, mstr.nameFirst, mstr.nameLast FROM(
+                   (SELECT playerID
+                    FROM salaries 
+                    GROUP BY playerID 
+                    HAVING AVG(salary) > (SELECT AVG(salary) FROM salaries) ) AS plyr
+                    LEFT OUTER JOIN 
+                   (SELECT playerID, nameFirst, nameLast FROM master) as mstr
+                    ON mstr.playerID = plyr.playerID)
+                    ORDER BY playerID """
